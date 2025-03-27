@@ -3,10 +3,10 @@ import axios from "axios";
 import type {Nullable} from "@/assets/types";
 
 export const useCharacters = (): Nullable<CharacterType[]> => {
-    const [characters, setCharacters] = useState<CharacterType[] | null>(null);
+    const [characters, setCharacters] = useState<Nullable<CharacterType[]>>(null);
 
     useEffect(() => {
-        axios.get('https://rickandmortyapi.com/api/character').then(res => setCharacters(res.data.results));
+        axios.get(`${process.env.NEXT_PUBLIC_RICK_AND_MORTY_API_URL}`).then(res => setCharacters(res.data.results));
     }, [])
 
     return characters;
