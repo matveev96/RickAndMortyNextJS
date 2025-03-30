@@ -1,12 +1,12 @@
 import {useEffect, useState} from "react";
-import axios from "axios";
-import type {Nullable} from "@/assets/types";
+import type {Nullable} from "@/assets/types/Nullable";
+import {API} from "@/assets/api/api";
 
 export const useCharacters = (): Nullable<CharacterType[]> => {
     const [characters, setCharacters] = useState<Nullable<CharacterType[]>>(null);
 
     useEffect(() => {
-        axios.get(`${process.env.NEXT_PUBLIC_RICK_AND_MORTY_API_URL}`).then(res => setCharacters(res.data.results));
+        API.rickAndMorty.getCharacters().then(res => setCharacters(res.results));
     }, [])
 
     return characters;
