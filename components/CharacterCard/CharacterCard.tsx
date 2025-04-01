@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from "next/image";
-import {type CharacterType} from "@/assets/hooks/useCharacters";
 import styles from './CharactersCard.module.scss'
+import type {CharacterType} from "@/assets/api/rick-and-morty-api";
 
 export const CharacterCard = (props: {character: CharacterType}) => {
     const {character} = props
