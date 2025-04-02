@@ -5,9 +5,10 @@ import Link from "next/link";
 import {API} from "@/assets/api/api";
 import type {CharacterType, ResponseType} from "@/assets/api/rick-and-morty-api";
 import styles from "@/styles/Home.module.css";
+import {GetStaticProps} from 'next'
 
 
-export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
     const characters = await API.rickAndMorty.getCharacters()
     return {
         props: {
