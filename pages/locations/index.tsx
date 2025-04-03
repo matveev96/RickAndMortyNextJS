@@ -1,9 +1,10 @@
 import {HeadMeta} from "@/components/HeadMeta/HeadMeta";
 import {getLayout} from "@/components/Layout/Layout";
-import Link from "next/link";
 import styles from "@/styles/Home.module.css";
-import {useQuery} from "@tanstack/react-query";
+import {dehydrate, QueryClient, useQuery} from "@tanstack/react-query";
 import type {LocationType, ResponseType} from "@/assets/api/rick-and-morty-api";
+import {GetStaticProps} from "next";
+import {Card} from "@/components/Card/Card";
 
 const getLocations = async () => {
     const res = await fetch('https://rickandmortyapi.com/api/location', {
@@ -12,6 +13,18 @@ const getLocations = async () => {
     return await res.json();
 }
 
+export const getStaticProps: GetStaticProps = async () => {
+    const queryClient = new QueryClient();
+
+    await queryClient.fetchQuery({queryKey: ['locations'], queryFn: getLocations})
+    return {
+        props: {
+            dehydrateState: dehydrate(queryClient),
+        }
+    }
+}
+
+
 function Locations() {
 
     const {data: locations} = useQuery<ResponseType<LocationType>>({queryKey: ['locations'], queryFn: getLocations})
@@ -19,9 +32,7 @@ function Locations() {
     if(!locations) return null
 
     const locationsList = locations.results?.map(locate => (
-        <Link href={`/locations/${locate.id}`} key={locate.id}>
-            {locate.name}
-        </Link>
+        <Card key={locate.id} name={locate.name} />
     ))
     return (
         <>
