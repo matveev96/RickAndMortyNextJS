@@ -1,19 +1,32 @@
 import "@/styles/globals.css";
-import type { AppProps } from "next/app";
-import type {ReactElement, ReactNode} from "react";
+import type {AppProps} from "next/app";
+import React, {type ReactElement, type ReactNode, useState} from "react";
 import type {NextPage} from "next";
+import {QueryClient, QueryClientProvider, hydrate} from "@tanstack/react-query";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
-  getLayout?: (page: ReactElement) => ReactNode;
+    getLayout?: (page: ReactElement) => ReactNode;
 }
 
 type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout
+    Component: NextPageWithLayout
 }
 
-export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+const queryClient = new QueryClient();
 
-  const getLayout = Component.getLayout ?? ((page) => page);
+export default function MyApp({Component, pageProps}: AppPropsWithLayout) {
+    const [queryClientState] = useState(pageProps.dehydratedState);
 
-  return getLayout(<Component {...pageProps} />);
+    if (queryClientState) {
+        hydrate(queryClient, queryClientState);
+    }
+
+    const getLayout = Component.getLayout ?? ((page) => page);
+
+
+    return getLayout(
+        <QueryClientProvider client={queryClient}>
+                <Component {...pageProps} />
+        </QueryClientProvider>
+    );
 }
