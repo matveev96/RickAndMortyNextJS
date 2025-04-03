@@ -1,10 +1,10 @@
 import {HeadMeta} from "@/components/HeadMeta/HeadMeta";
 import {getLayout} from "@/components/Layout/Layout";
-import Link from "next/link";
 import {API} from "@/assets/api/api";
 import styles from "@/styles/Home.module.css";
 import {type GetServerSideProps} from 'next'
 import type {EpisodeType, ResponseType} from "@/assets/api/rick-and-morty-api";
+import {Card} from "@/components/Card/Card";
 
 
 export const getServerSideProps: GetServerSideProps = async () => {
@@ -33,11 +33,7 @@ function Episodes(props: PropsType) {
     const {episodes} = props;
 
     const episodesList = episodes.results.map(episode => (
-        <Link href={`/episodes/${episode.id}`} key={episode.id}>
-            <h2>{episode.name}</h2>
-            <h3>Episode: {episode.episode}</h3>
-
-        </Link>
+        <Card key={episode.id} name={episode.name} />
     ))
     return (
         <>
