@@ -6,7 +6,7 @@ import {useQuery} from "@tanstack/react-query";
 import type {LocationType, ResponseType} from "@/assets/api/rick-and-morty-api";
 
 const getLocations = async () => {
-    const res = await fetch('https://rickandmortyapi.com/api/locations', {
+    const res = await fetch('https://rickandmortyapi.com/api/location', {
         method: 'GET',
     });
     return await res.json();
@@ -14,10 +14,14 @@ const getLocations = async () => {
 
 function Locations() {
 
-    const {data: locations} = useQuery<ResponseType<LocationType>>(['locations'], getLocations)
+    const {data: locations} = useQuery<ResponseType<LocationType>>({queryKey: ['locations'], queryFn: getLocations})
 
-    const locationsList = locations.results.map(locate => (
-        <Link href={`/locations/${locate.id}`} key={locate.id}></Link>
+    if(!locations) return null
+
+    const locationsList = locations.results?.map(locate => (
+        <Link href={`/locations/${locate.id}`} key={locate.id}>
+            {locate.name}
+        </Link>
     ))
     return (
         <>
