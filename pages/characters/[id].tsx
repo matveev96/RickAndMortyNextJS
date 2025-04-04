@@ -5,6 +5,7 @@ import type {GetStaticPaths, GetStaticProps} from "next";
 import {API} from "@/assets/api/api";
 import type {CharacterType} from "@/assets/api/rick-and-morty-api";
 import {useRouter} from "next/router";
+import style from '@/styles/Home.module.css'
 
 export const getStaticPaths: GetStaticPaths = async () => {
 
@@ -60,7 +61,10 @@ function Character({ character }: PropsType) {
             <HeadMeta title={"Characters"}/>
             <div>ID: {characterIDFromRouter}</div>
             <CharacterCard character={character}/>
-            <button onClick={goToCharactersHandler}>Go to CHARACTERS</button>
+            <div className={style.buttons}>
+                <button  onClick={goToCharactersHandler}>GO TO CHARACTERS</button>
+            </div>
+
         </>
     );
 }
