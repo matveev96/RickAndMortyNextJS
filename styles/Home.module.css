@@ -18,6 +18,26 @@
     font-family: var(--font-geist-sans);
 }
 
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+.buttons > button {
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background: #fa52d3;
+    transition: ease-in 0.1s;
+}
+
+.buttons > button:hover {
+    transform: scale(0.9);
+    background: #fa52d3;
+}
+
 @media (prefers-color-scheme: dark) {
     .page {
         --gray-rgb: 255, 255, 255;
@@ -94,10 +114,9 @@
     padding: 0 20px;
     border: none;
     border: 1px solid transparent;
-    transition:
-            background 0.2s,
-            color 0.2s,
-            border-color 0.2s;
+    transition: background 0.2s,
+    color 0.2s,
+    border-color 0.2s;
     cursor: pointer;
     display: flex;
     align-items: center;
