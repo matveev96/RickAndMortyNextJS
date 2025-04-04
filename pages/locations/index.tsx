@@ -5,6 +5,7 @@ import {dehydrate, QueryClient, useQuery} from "@tanstack/react-query";
 import type {LocationType, ResponseType} from "@/assets/api/rick-and-morty-api";
 import {GetStaticProps} from "next";
 import {Card} from "@/components/Card/Card";
+import Link from "next/link";
 
 const getLocations = async () => {
     const res = await fetch('https://rickandmortyapi.com/api/location', {
@@ -32,7 +33,9 @@ function Locations() {
     if(!locations) return null
 
     const locationsList = locations.results?.map(locate => (
-        <Card key={locate.id} name={locate.name} />
+        <Link href={`/locations/${locate.id}`} key={locate.id}>
+            <Card  name={locate.name} />
+        </Link>
     ))
     return (
         <>
