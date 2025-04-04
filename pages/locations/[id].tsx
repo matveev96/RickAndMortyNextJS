@@ -49,7 +49,6 @@ function Location({ location }: PropsType) {
             {location &&
                 <Card name={location.name}>
                     <div>{location.dimension}</div>
-                    <div>{location.residents}</div>
                 </Card>
             }
         </>
