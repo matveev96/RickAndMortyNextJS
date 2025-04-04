@@ -4,6 +4,7 @@ import {getLayout} from "@/components/Layout/Layout";
 import type {GetStaticPaths, GetStaticProps} from "next";
 import {API} from "@/assets/api/api";
 import type {CharacterType} from "@/assets/api/rick-and-morty-api";
+import {useRouter} from "next/router";
 
 export const getStaticPaths: GetStaticPaths = async () => {
 
@@ -45,10 +46,21 @@ function Character({ character }: PropsType) {
 
     // const character = useCharacter() если используем useEffect (работа как с обычным React)
 
+    const router = useRouter()
+
+    // Если используем fallback: true в staticPaths и хотим показывать какой-то лоадер во время подгрузки, можно использовать router.isFallback, но поисковой робот будет видеть этот лоадер, а не информацию со странички
+    if(router.isFallback) return <h1>Loading...</h1>
+
+    const characterIDFromRouter = router.query.id
+
+    const goToCharactersHandler = () => router.push('/characters/')
+
     return (
         <>
             <HeadMeta title={"Characters"}/>
-            {character && <CharacterCard character={character}/>}
+            <div>ID: {characterIDFromRouter}</div>
+            <CharacterCard character={character}/>
+            <button onClick={goToCharactersHandler}>Go to CHARACTERS</button>
         </>
     );
 }
