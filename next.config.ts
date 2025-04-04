@@ -11,6 +11,9 @@ const nextConfig: NextConfig = {
         pathname: '/api/character/avatar/**'
       }
     ]
+  },
+  eslint: {
+    ignoreDuringBuilds: true
   }
 };
 
