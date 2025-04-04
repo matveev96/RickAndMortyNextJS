@@ -5,6 +5,7 @@ import styles from "@/styles/Home.module.css";
 import {type GetServerSideProps} from 'next'
 import type {EpisodeType, ResponseType} from "@/assets/api/rick-and-morty-api";
 import {Card} from "@/components/Card/Card";
+import Link from "next/link";
 
 
 export const getServerSideProps: GetServerSideProps = async () => {
@@ -33,7 +34,10 @@ function Episodes(props: PropsType) {
     const {episodes} = props;
 
     const episodesList = episodes.results.map(episode => (
-        <Card key={episode.id} name={episode.name} />
+        <Link href={`/episodes/${episode.id}`} key={episode.id}>
+            <Card name={episode.name} />
+        </Link>
+
     ))
     return (
         <>
